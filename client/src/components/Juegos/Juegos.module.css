@@ -1,0 +1,10 @@
+.juegos{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color:#333333;
+    opacity: 0.50;
+    width: 48%;
+    margin: 1%;
+    border-radius: 20px;
+}
