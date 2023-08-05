@@ -1,10 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .juegos{
     display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color:#333333;
-    opacity: 0.50;
-    width: 48%;
-    margin: 1%;
+    width: 22%;
+    height: 30vh;
+    border-radius: 30px;
+    color: white;
+    margin: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    font-size: 0.5rem!important;
+       
+}
+.juegos a {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto del elemento padre */
+  }
+.juegos h3:not(a){
+    font-size: 0.8rem!important;
+    text-align: center;
+    line-height: 1.5rem;
+    margin: 1rem;
+    text-decoration: double underline;
+    text-decoration-thickness: 0.1rem;
+}
+.juegos h4{
+    text-align: center;
+    line-height: 1.5;
+}
+
+.juegos img{
+    width: 80%;
+    height: 50%;
+    margin: 0.5rem;
     border-radius: 20px;
 }
