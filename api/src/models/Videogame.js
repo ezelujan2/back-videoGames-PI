@@ -8,23 +8,23 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      autoincrement: true,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description : {
+    description:{
       type: DataTypes.STRING,
       allowNull : false
     },
-    plataform : {
-      type: DataTypes.STRING,
+    platform : {
+      type:  DataTypes.ARRAY(DataTypes.JSON),
       allowNull: false,
     },
     background_image : {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     released : {
       type: DataTypes.STRING,
@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
     },
     rating : {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     }
   });
 };

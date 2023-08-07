@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize , Op} = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -15,11 +15,13 @@ genre(sequelize)
 
 const {Videogame,Genre} = sequelize.models;
 
-Videogame.belongsToMany(Genre, {through: 'VideoGenders'})
-Genre.belongsToMany(Videogame, {through: 'VideoGenders'})
+
+Videogame.belongsToMany(Genre, { through: 'VideoGenres' });
+Genre.belongsToMany(Videogame, { through: 'VideoGenres' });
 
 module.exports = {
     Videogame,
     Genre,
     conn: sequelize,
+    Op,
 }

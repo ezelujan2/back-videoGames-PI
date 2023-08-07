@@ -1,4 +1,4 @@
-const {Videogame} = require('../DB_connection')
+const {Videogame, Genre} = require('../db')
 const {KEY} = process.env;
 const axios = require('axios')
 const getByName = require('../controllers/getByName')
@@ -7,11 +7,13 @@ const getByName = require('../controllers/getByName')
 
 const getvideogames = async (req,res) => {
     try {
-
         if(req.query.name) return getByName(req,res)
-        // Al hacer el pedido de la api no incluye la descripcion
+        
+        const base = await Videogame.findAll({
+            include: Genre,
+          });
+
         let {data} = await axios(`https://api.rawg.io/api/games?key=${KEY}`)
-        const base = await Videogame.findAll()
 
         let videoJuegos = []
 
@@ -22,8 +24,8 @@ const getvideogames = async (req,res) => {
         }
 
         if(base.length === 0) return res.json(videoJuegos)
-        const allData = [...data.results, ...base]    
-        return res.json(allData)
+        const allData = [...videoJuegos, ...base]
+        return res.status(200).json(allData)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

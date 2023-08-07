@@ -1,4 +1,4 @@
-const {Genre} = require('../DB_connection')
+const {Genre} = require('../db')
 const axios = require('axios')
 const {KEY} = process.env
 
