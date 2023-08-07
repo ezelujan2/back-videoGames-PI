@@ -7,12 +7,13 @@ const initialState = {
     byName : [],
     details: '',
     genres: [],
+    orderByOrigin: false
 }
 
 const reducer = (state=initialState, {type,payload}) => {
     switch(type){
         case GET_CARDS:
-            return{...state, juegos:payload}
+            return{...state, juegos:payload, aux: payload}
         case GET_BY_NAME:
             return{...state, byName:payload}
         case GET_DETAILS:
@@ -33,56 +34,39 @@ const reducer = (state=initialState, {type,payload}) => {
 
         case GET_GENRES:
             return{...state,genres:payload}
-        
         case FILTER_BY_GENRE:
                 if(payload === 'todos'){
-                    if(state.aux.length === 0) return {...state}
-                    else return{...state, juegos:state.aux}
-                }
-                else if(state.aux.length === 0){
-                    let updated = []
-                    state.juegos.map(juegos => {
-                        if(juegos.hasOwnProperty('Genres')) updated.push({...juegos, genres: juegos.Genres})
-                        else updated.push(juegos)
-                    })
-                    let filtered = updated.filter((game) => game.genres.map(genero => genero.name).includes(payload));
-                    return { ...state, aux: updated, juegos: filtered}
+                    return{...state, juegos:state.aux}
                 }
                 else {
-                    let filtered = state.aux.filter((game) => game.genres.map(genero => genero.name).includes(payload));
+                    const withGenres = [];
+                    let gameShowed = state.aux;
+                    if(state.orderByOrigin === true) gameShowed = state.juegos
+                    gameShowed.map(game => {
+                        if(game.hasOwnProperty('Genres')){
+                            withGenres.push({...game,genres: game.Genres})
+                        }
+                        else withGenres.push(game)
+                    })
+                    
+                    const filtered = withGenres.filter((juego) => juego.genres.map(genero => genero.name).includes(payload));
                     return{...state, juegos:filtered}
                 }
         case FILTER_BY_ORIGIN:
-            if(state.aux.length === 0) {
-                let db = []
-                let api = []
-                state.juegos.map(juego => {
-                    if(juego.hasOwnProperty('updatedAt')) db.push(juego);
-                    else api.push(juego)
-                })
-                if(payload === 'DB') return{...state, aux: state.juegos, juegos: db}
-                if(payload === 'API') return{...state, aux: state.juegos, juegos: api}
-                if(payload === 'todos') return{...state}
-            }
-            else{
                 let db = []
                 let api = []
                 state.aux.map(juego => {
                     if(juego.hasOwnProperty('updatedAt')) db.push(juego)
                     else api.push(juego)
                 })
-                if(payload === 'DB') return {...state, juegos: db}
-                if(payload === 'API') return {...state, juegos: api}
-                if(payload === 'todos') return {...state, juegos: state.aux}
-            }
+                if(payload === 'DB') return {...state, juegos: db, orderByOrigin: true}
+                if(payload === 'API') return {...state, juegos: api, orderByOrigin: true}
+                if(payload === 'todos') return {...state, juegos: state.aux, orderByOrigin: false}
         
         case POST_GAME:
-            if(state.aux.length === 0){
-                return {...state, juegos: [...state.juegos, payload]}
-            }
-            else{
+
                 return {...state, aux: [...state.aux, payload]}
-            }
+
         default:
             return {...state}
     }

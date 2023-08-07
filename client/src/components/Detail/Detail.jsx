@@ -3,6 +3,7 @@ import estilos from './Detail.module.css'
 import { useParams } from "react-router-dom"
 import { get_details } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from "react-redux";
+const noImage = require("../Juegos/sinimagen.png")
 
 export default function Detail() {
     const param = useParams()
@@ -16,6 +17,7 @@ export default function Detail() {
 
     const currentGame = useSelector(state => state.details)
     console.log(currentGame)
+
     
     
  
@@ -26,6 +28,7 @@ export default function Detail() {
                 <h5>PLATFORMS:</h5>
                 <ul>
                     {currentGame.platforms?.map(plataformas => {
+                        if(plataformas.name) return (<li>{plataformas.name}</li>)
                         return (
                             <li>{plataformas.platform.name}</li>
                         )
@@ -33,7 +36,7 @@ export default function Detail() {
                 </ul>
                 <h5 dangerouslySetInnerHTML={{ __html: currentGame.description}}></h5>
                 <h5>RELEASED : {currentGame.released}</h5>
-                <h5>RATING: {currentGame.rating}</h5>
+                <h5>RATING: {currentGame.rating ? currentGame.rating : "No rating"}</h5>
                 <h5>GENRES: </h5>
                 <ul>
                     {currentGame.genres?.map(generos=> {
@@ -42,7 +45,8 @@ export default function Detail() {
                         )
                     })}
                 </ul>
-                <img src={currentGame.imagen} alt={currentGame.name}/>
+                {currentGame.imagen ? <img src={currentGame.imagen} alt={currentGame.name}/> : <img src={noImage} alt={currentGame.name}/>}
+                
         </div>
         
     )

@@ -42,12 +42,13 @@ export default function Form(){
         setGenero("")
     }
     const addPlatform = (event) => {
-        setGame({...game,platform: [...game.platform, platform]})
+        setGame({...game,platform: [...game.platform, {name: platform}]})
         setPlatforms("")
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(game)
         if(genero != "") addGenre()
         if(platform != "") addPlatform()
         dispatch(post_game(game))
