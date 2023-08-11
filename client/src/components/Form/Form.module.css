@@ -19,7 +19,7 @@
     border: 2px solid #fff;
     box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
 }
-.formulario input, button{
+.formulario input, button, textarea{
     font-size: 0.8rem;
     margin:0.5rem;
     border: 2px solid #ffffff;
@@ -38,5 +38,14 @@
   }
   
   .add{
-    margin-left: -35px; /* Ajusta el valor para colocar el botón correctamente */
+    margin-left: -45px; /* Ajusta el valor para colocar el botón correctamente */
+    background-color: white;
+    padding: 1px;
+    border-radius: 3px;
   }
+
+.warning{
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+}

@@ -20,7 +20,10 @@ const reducer = (state=initialState, {type,payload}) => {
             return{...state, details:payload}
         case SORT_GAMES:
             let orderedlist = [...state.juegos]
-            if(payload === 'A') {
+            if(payload === 'TD'){
+                return {...state, juegos : state.aux}
+            }
+            else if(payload === 'A') {
                 return {...state, juegos: orderedlist.sort((a, b) => a.name.localeCompare(b.name))}
             }
             else if(payload === 'D'){
@@ -39,23 +42,20 @@ const reducer = (state=initialState, {type,payload}) => {
                     return{...state, juegos:state.aux}
                 }
                 else {
-                    const withGenres = [];
-                    let gameShowed = state.aux;
-                    if(state.orderByOrigin === true) gameShowed = state.juegos
-                    gameShowed.map(game => {
-                        if(game.hasOwnProperty('Genres')){
-                            withGenres.push({...game,genres: game.Genres})
+                    const filtered = state.juegos.filter((juego) => {
+                        if(juego.hasOwnProperty('genres')){
+                        return juego.genres.map(genero => genero.name).includes(payload)
                         }
-                        else withGenres.push(game)
-                    })
-                    
-                    const filtered = withGenres.filter((juego) => juego.genres.map(genero => genero.name).includes(payload));
+                        else {
+                            return juego.Genres.map(genero => genero.name).includes(payload)
+                        }
+                    });
                     return{...state, juegos:filtered}
                 }
         case FILTER_BY_ORIGIN:
                 let db = []
                 let api = []
-                state.aux.map(juego => {
+                state.juegos.map(juego => {
                     if(juego.hasOwnProperty('updatedAt')) db.push(juego)
                     else api.push(juego)
                 })
@@ -64,8 +64,7 @@ const reducer = (state=initialState, {type,payload}) => {
                 if(payload === 'todos') return {...state, juegos: state.aux, orderByOrigin: false}
         
         case POST_GAME:
-
-                return {...state, aux: [...state.aux, payload]}
+                return {...state, orderByOrigin: false}
 
         default:
             return {...state}

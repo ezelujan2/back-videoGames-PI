@@ -22,13 +22,13 @@ export default function Detail() {
     
  
     return (
-        <div className={estilos.container}>
+        <div className={estilos.container} key={id}>
                 <h3 className={estilos.titulo}>{currentGame.name}</h3>
                 <h5>ID: {currentGame.id}</h5>
                 <h5>PLATFORMS:</h5>
                 <ul>
                     {currentGame.platforms?.map(plataformas => {
-                        if(plataformas.name) return (<li>{plataformas.name}</li>)
+                        if(plataformas.name) return (<li key={plataformas.id}>{plataformas.name}</li>)
                         return (
                             <li>{plataformas.platform.name}</li>
                         )
@@ -41,7 +41,7 @@ export default function Detail() {
                 <ul>
                     {currentGame.genres?.map(generos=> {
                         return (
-                            <li>{generos.name}</li>
+                            <li key={generos}>{generos.name}</li>
                         )
                     })}
                 </ul>
