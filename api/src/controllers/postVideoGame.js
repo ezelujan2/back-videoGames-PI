@@ -3,8 +3,8 @@ const {Videogame,Genre} = require('../db')
 
 const postVideoGame = async (req,res) => {
     try {
-        const {name,description,platform,imagen,genres,released} = req.body
-        console.log(platform)
+        const {name,description,platform,imagen,genres,released,rating} = req.body
+        
         const [videogame, gameCreated] = await Videogame.findOrCreate({
             where: {
                 name,
@@ -13,20 +13,24 @@ const postVideoGame = async (req,res) => {
                 name,
                 description,
                 platform,
-                imagen,
+                background_image: imagen,
                 released,
+                rating,
             }
         })
-    
-        const [genero, genreCreated] = await Genre.findOrCreate({
-            where: {
-                name : genres
-            },
-            defaults: {
-                name,
-            }
+        genres.map(async genre => {
+            const [genero, genreCreated] = await Genre.findOrCreate({
+                where: {
+                    name : genre
+                },
+                defaults: {
+                    name: genre,
+                }
+            })
+            await videogame.addGenre(genero)
         })
-        await videogame.addGenre(genero)
+        
+        
         res.send('Creado con exito')
     } catch (error) {
         console.log(error.message)

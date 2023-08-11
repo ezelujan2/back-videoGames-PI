@@ -14,6 +14,7 @@ const getGenres = async (req,res) => {
         }
         return res.status(200).json(await Genre.findAll()) 
     } catch (error) {
+        console.log(error.message)
         res.send(error.message)
     }
 }

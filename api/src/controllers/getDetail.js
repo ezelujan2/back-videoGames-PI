@@ -5,8 +5,11 @@ const axios = require('axios')
 
 const getDetails = async (req,res) => {
     try {
-        let description = await Videogame.findByPk(req.params.game, {include: Genre})
-        console.log(description)
+        let description = null;
+        if(req.params.game.includes("-") === true){
+            description = await Videogame.findByPk(req.params.game, {include: Genre})
+        }
+        
         if(!description) {
             description = await axios(`https://api.rawg.io/api/games/${req.params.game}?key=${KEY}`)
             return res.json({
