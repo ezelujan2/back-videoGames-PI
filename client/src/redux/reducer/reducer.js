@@ -7,7 +7,7 @@ const initialState = {
     byName : [],
     details: '',
     genres: [],
-    orderByOrigin: false
+    filteredByOrigin: {filtered: false, by: ''}
 }
 
 const reducer = (state=initialState, {type,payload}) => {
@@ -21,7 +21,7 @@ const reducer = (state=initialState, {type,payload}) => {
         case SORT_GAMES:
             let orderedlist = [...state.juegos]
             if(payload === 'TD'){
-                return {...state, juegos : state.aux}
+                return {...state, juegos : state.aux, filteredByOrigin: {filtered:false, by: ''}}
             }
             else if(payload === 'A') {
                 return {...state, juegos: orderedlist.sort((a, b) => a.name.localeCompare(b.name))}
@@ -59,9 +59,9 @@ const reducer = (state=initialState, {type,payload}) => {
                     if(juego.hasOwnProperty('updatedAt')) db.push(juego)
                     else api.push(juego)
                 })
-                if(payload === 'DB') return {...state, juegos: db, orderByOrigin: true}
-                if(payload === 'API') return {...state, juegos: api, orderByOrigin: true}
-                if(payload === 'todos') return {...state, juegos: state.aux, orderByOrigin: false}
+                if(payload === 'DB') return {...state, juegos: db, filteredByByOrigin: {filtered:true, by: 'db'}}
+                if(payload === 'API') return {...state, juegos: api, filteredByOrigin: {filtered:true, by: 'api'}}
+                if(payload === 'todos') return {...state, juegos: state.aux, orderByOrigin: {filtered:false, by: ''}}
         
         case POST_GAME:
                 return {...state, orderByOrigin: false}

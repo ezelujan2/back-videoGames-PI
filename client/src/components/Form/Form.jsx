@@ -22,7 +22,8 @@ export default function Form(){
     })
 
     const todook = () => {
-        if(game.name != '' && game.description != "" && game.released != "" && !genero  && !platform && error.rating == '') return false;
+        // Son obligatorios el nombre, fecha, description y plataforma.
+        if(game.name != '' && game.description != "" && game.platform.length !== 0 && game.released != "" && !genero && !platform && error.rating == '' && error.released == '' ) return false;
         else return true
     }
 
@@ -31,6 +32,7 @@ export default function Form(){
         rating: '',
         genre: '',
         platform: '',
+        released: '',
     })
 
     const[genero,setGenero] = useState("")
@@ -126,6 +128,7 @@ export default function Form(){
                 {error.name ? <p className={estilos.warning}>{error.name}</p> : ''}
                 {error.genre ? <p className={estilos.warning}>{error.genre}</p> : ""}
                 {error.platform ? <p className={estilos.warning}>{error.platform}</p> : ""}
+                {error.released ? <p className={estilos.warning}>{error.released}</p> : ""}
 
 
                 {genero  ? <p className={estilos.warning}> Press to Add genre</p> : ''} 

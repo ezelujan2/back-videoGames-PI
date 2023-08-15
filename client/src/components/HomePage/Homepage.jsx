@@ -63,16 +63,31 @@ export default function Homepage() {
         dispatch(sort_games(event.target.name))
     }
 
+    const [selectedGenre, setSelectedGenre] = useState('todos');
+    const [selectedOrigin, setSelectedOrigin] = useState('todos');
+
     const handleGenreChange = event => {
         setPage(1)
+        setSelectedGenre(event.target.value)
         const selectedGenre = event.target.value;
         dispatch(filter_gender(selectedGenre));
     };
 
     const handleOrigin = (event) => {
         setPage(1)
+        setSelectedOrigin(event.target.value)
         const selectedOrigin = event.target.value
         dispatch(filter_origin(selectedOrigin))
+    }
+
+
+
+    const handleReset = (event) => {
+        setSelectedGenre('todos')
+        setSelectedOrigin('todos')
+
+        setSelected(event.target.name)
+        dispatch(sort_games(event.target.name))
     }
     
 
@@ -122,10 +137,10 @@ export default function Homepage() {
                     <button onClick={handleSort} name="D" className={`${estilos.boton} ${selected  === 'D' ? estilos.selectedButton: ''}`}> Descendente </button>
                     <button onClick={handleSort} name="RA" className={`${estilos.boton} ${selected  === 'RA' ? estilos.selectedButton: ''}`}> Mayor rating </button>
                     <button onClick={handleSort} name="RD" className={`${estilos.boton} ${selected  === 'RD' ? estilos.selectedButton: ''}`}> Menor rating </button>
-                    <button onClick={handleSort} name="TD" className={`${estilos.boton}`}>RESET VALUES</button>
+                    <button onClick={handleReset} name="TD" className={`${estilos.boton}`}>RESET VALUES</button>
 
                     <p className={estilos.subtitulo}>Filtrados: </p> 
-                        <select onChange={handleGenreChange}className={estilos.boton}>
+                        <select onChange={handleGenreChange}className={estilos.boton} value={selectedGenre}>
                         <option key="todos" value="todos"> All genres </option>
 
                             {genres?.map((genero) => (
@@ -135,7 +150,7 @@ export default function Homepage() {
                             ))}
                         </select>
                     
-                        <select onChange={(handleOrigin)} className={estilos.boton}>
+                        <select onChange={(handleOrigin)} className={estilos.boton} value={selectedOrigin}>
                         
                         <option value="todos"> All origins</option>
                         <option value="DB"> BDD</option>
