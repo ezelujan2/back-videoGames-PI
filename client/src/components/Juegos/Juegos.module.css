@@ -15,7 +15,19 @@
     color: white;
     font-size: 0.5rem!important;
     transition: opacity 0.3s, transform 0.3s;
+    animation: fadeIn 0.5s ease-in-out backwards;
 }
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .juegos:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

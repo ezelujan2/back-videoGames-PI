@@ -33,6 +33,7 @@ export default function Form(){
         genre: '',
         platform: '',
         released: '',
+        description: '',
     })
 
     const[genero,setGenero] = useState("")
@@ -97,7 +98,12 @@ export default function Form(){
         dispatch(post_game(game))
         alert('Su juego fue agregado de manera exitosa!')
         navigate('/home')
+    }
 
+    const handleDelete = (event) => {
+        // event.preventDefault();
+        const deletedGenre = game.genres.filter(gen => gen != event.target.id)
+        setGame({...game, genres: deletedGenre})
     }
 
     return (
@@ -129,13 +135,14 @@ export default function Form(){
                 {error.genre ? <p className={estilos.warning}>{error.genre}</p> : ""}
                 {error.platform ? <p className={estilos.warning}>{error.platform}</p> : ""}
                 {error.released ? <p className={estilos.warning}>{error.released}</p> : ""}
+                {error.description ? <p className={estilos.warning}>{error.description}</p> : ""}
 
 
                 {genero  ? <p className={estilos.warning}> Press to Add genre</p> : ''} 
                 {platform  ? <p className={estilos.warning}> Press to Add platform </p> : ''}
 
                 {game.genres.length !== 0 ? <p className={estilos.warning}>GENRES: </p> : '' }
-                {game.genres ? game.genres.map(gen => <p className={estilos.warning}>{`- ${gen}`}</p>) : ''}
+                {game.genres ? game.genres.map(gen => <p className={estilos.warning}>{`- ${gen}`} <button id={gen} onClick={handleDelete}>X</button></p>) : ''}
 
 
                 {game.platform.length !== 0 ? <p className={estilos.warning}>PLATFORMS: </p> : '' }

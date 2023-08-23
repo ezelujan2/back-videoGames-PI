@@ -13,7 +13,7 @@ export default function Detail() {
     useEffect(()=> {
         dispatch(get_details(id))
     }, [id])
-
+    //al desmontar
 
     const currentGame = useSelector(state => state.details)
     console.log(currentGame)
